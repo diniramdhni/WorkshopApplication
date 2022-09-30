@@ -9,34 +9,34 @@ import java.util.List;
 
 public interface RepairRepository extends JpaRepository<Repair, Integer> {
 
-    @Query("""
+    @Query(value = """
             SELECT rep
             FROM Repair AS rep
             INNER JOIN rep.workshop AS wo
             INNER JOIN rep.vehicle AS veh
             WHERE wo.id = :workshopId 
-            """)
+            """, nativeQuery = true)
     public List<Repair> findAllByWorkshop_Id(@Param("workshopId") Integer workshopId
                                             );
 
 
-    @Query("""
+    @Query(value = """
             SELECT rep
             FROM Repair AS rep
             INNER JOIN rep.workshop AS wo
             INNER JOIN rep.vehicle AS veh
             WHERE wo.id = :workshopId AND rep.id = :repairId 
-            """)
+            """, nativeQuery = true)
     Repair findByWorkshopIdAndRepairId(@Param("workshopId") Integer workshopId,
                                        @Param("repairId") Integer repairId);
 
 
-    @Query("""
+    @Query(value = """
             SELECT rep
             FROM Repair AS rep
             INNER JOIN rep.workshop AS wo
             INNER JOIN rep.vehicle AS veh
             WHERE veh.platNumber = :platNumber
-            """)
+            """, nativeQuery = true)
     List<Repair> getRepairsByPlatNumber(@Param("platNumber") String platNumber);
 }

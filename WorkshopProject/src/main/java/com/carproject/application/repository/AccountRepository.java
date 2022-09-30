@@ -7,10 +7,11 @@ import org.springframework.data.repository.query.Param;
 
 public interface AccountRepository extends JpaRepository<Account, String> {
 
-    @Query("""
+    @Query(value = """
             SELECT COUNT(*)
             FROM Account AS acc
             WHERE acc.username = :username
-            """)
+            """,
+    nativeQuery = true)
     Long count(@Param("username") String username);
 }
